@@ -20,3 +20,26 @@ def index():
     ol = pd.read_sql_table('olives', db.session.connection())
     desc = ol.describe()
     return render_template("index.html", ol_desc=desc)
+
+@app.route('/violin')
+def violin():
+    import seaborn as sns
+
+    from bokeh import mpl
+    from bokeh.plotting import output_file, show
+
+    tips = sns.load_dataset("tips")
+
+    sns.set_style("whitegrid")
+
+
+    ax = sns.violinplot(x="day", y="total_bill", hue="sex",
+                        data=tips, palette="Set2", split=True,
+                        scale="count", inner="stick")
+
+
+    output_file("seaborn_violin.html", title="seaborn_violin.py example")
+
+    show(mpl.to_bokeh())
+    script, div = components(mpl)
+    return render_template("bokeh.html", bsc=script, bdiv=div)
