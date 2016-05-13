@@ -2,7 +2,16 @@ from olives import app, db
 from flask import render_template, flash, redirect, session, url_for, request, g
 import pandas as pd
 
+from bokeh.plotting import figure
+from bokeh.embed import components
 
+
+@app.route('/bokeh')
+def bokeh():
+    plot = figure()
+    plot.circle([1,2], [3,4])
+    script, div = components(plot)
+    return render_template("bokeh.html", bsc=script, bdiv=div)
 
 
 @app.route('/', methods=['GET', 'POST'])
