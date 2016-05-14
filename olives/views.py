@@ -26,7 +26,7 @@ def violin():
     import seaborn as sns
 
     from bokeh import mpl
-    from bokeh.plotting import output_file, show
+    from bokeh.plotting import output_file
 
     tips = sns.load_dataset("tips")
 
@@ -40,6 +40,6 @@ def violin():
 
     output_file("seaborn_violin.html", title="seaborn_violin.py example")
 
-    show(mpl.to_bokeh())
-    script, div = components(mpl)
+    bh = mpl.to_bokeh()
+    script, div = components(bh)
     return render_template("bokeh.html", bsc=script, bdiv=div)
