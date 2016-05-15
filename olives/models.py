@@ -12,5 +12,6 @@ def prepare_multi():
     pp = sns.pairplot(olives, vars=acid_list, hue="region", size=3, palette="Set2", diag_kind="kde")
     figdata = BytesIO()
     pp.savefig(figdata,format='png')
+    plt.close("all")
     return figdata
 

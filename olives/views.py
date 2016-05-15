@@ -32,7 +32,7 @@ def violin():
     ax = sns.violinplot(x="day", y="total_bill", hue="sex",
                         data=tips, palette="Set2", split=True,
                         scale="count", inner="stick")
-    bh = mpl.to_bokeh()
+    bh = mpl.to_bokeh(ax.figure)
     script, div = components(bh)
     return render_template("bokeh.html", bsc=script, bdiv=div)
 
