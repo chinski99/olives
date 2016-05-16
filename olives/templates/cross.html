@@ -15,7 +15,16 @@
         Plots prepared using Bokeh library: Scatter and Histogram.
     </div>
 </div>
-
+{% if histo == True %}
+<div class="panel panel-danger">
+    <div class="panel-heading">Bug in histogram</div>
+    <div class="panel-body">Version 0.11.1 of Bokeh has a bug that displays histogram incorrectly.
+        <p/>
+        Details here: <a
+                href="https://github.com/bokeh/bokeh/issues/3875">https://github.com/bokeh/bokeh/issues/3875</a>
+    </div>
+</div>
+{% endif %}
 <div class="col-sm-12">
 
     <div class="panel panel-info">

@@ -25,12 +25,14 @@ def scatter():
     if request.method == 'POST':
         acid1 = form.acid1.data
         acid2 = form.acid2.data
+        histo = False
         if acid1 == acid2:
             bh = models.acid_histogram(acid1)
+            histo = True
         else:
             bh = models.acid_scatter(acid1, acid2)
         script, div = components(bh)
-        return render_template("cross.html", form=form, bsc=script, bdiv=div)
+        return render_template("cross.html", form=form, bsc=script, bdiv=div, histo=histo)
     return render_template('cross.html', form=form)
 
 
