@@ -91,7 +91,10 @@ def train_decision_tree(dataset, features, explained):
 
 
 def visualize_tree(tree, acids, regions):
-    with open("olives/static/images/dt.dot", 'w') as f:
+    my_dir = os.path.dirname(__file__)
+    dot_file_path = os.path.join(my_dir, 'static/images/dt.dot')
+    png_file_path = os.path.join(my_dir, 'static/images/dt.png')
+    with open(dot_file_path, 'w') as f:
         export_graphviz(tree, out_file=f,
                         feature_names=acids,
                         class_names=regions,
@@ -100,7 +103,7 @@ def visualize_tree(tree, acids, regions):
 
     my_env = os.environ.copy()
     my_env["PATH"] = "/usr/local/bin:/usr/bin:" + my_env["PATH"]
-    command = ["dot", "-Tpng", "olives/static/images/dt.dot", "-o", "olives/static/images/dt.png"]
+    command = ["dot", "-Tpng", dot_file_path, "-o", png_file_path]
     try:
         subprocess.check_call(command, env=my_env)
     except:
