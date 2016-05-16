@@ -5,5 +5,21 @@
                 OLIVES
             </a>
         </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url_for('multi') }}">Multi-feature</a></li>
+                <li><a href="{{ url_for('scatter') }}">Scatter</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Acids <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        {% for item in acids %}
+                        <li><a href="{{ url_for('violin',acid=item) }}">{{item}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li><a href="{{ url_for('tree') }}">Decision tree</a></li>
+            </ul>
+        </div>
     </div>
 </nav>

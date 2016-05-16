@@ -4,31 +4,33 @@
 {% block content %}
 
 
-<h2>Texts overview</h2>
+<h2>Dataset overview</h2>
 <br>
-<div class="col-sm-2">
-    <div class="btn-group-vertical">
-        <a href="{{ url_for('bokeh') }}" class="btn btn-info"> Bokeh</a>
-        <a href="{{ url_for('violin') }}" class="btn btn-info"> Violin</a>
-        <a href="{{ url_for('multi') }}" class="btn btn-info"> Multi</a>
-    </div>
-</div>
-<div class="col-sm-10">
+
+<div class="col-sm-12">
 
     <div class="panel panel-info">
-
+        <div class="panel-heading">Italian olive oils dataset</div>
         <div class="panel-body">
-            {{ol_desc.to_html()|safe}}
-            <br>
-            <div class="pull-right">
-                <div class="btn-group-vertical">
-                    <a href="{{url_for('index') }}" class="btn btn-info btn-sm" role="button">Add
-                        translation</a>
-                    <a href="{{url_for('index') }}" class="btn btn-info btn-sm" role="button">Delete
-                        original</a>
-                </div>
-            </div>
+            <img src={{url_for('static', filename='images/oils.png' )}}>
 
+        </div>
+    </div>
+
+    <div class="panel panel-info">
+        <div class="panel-heading">Basic data description using describe</div>
+        <div class="panel-body">
+            {{ol_desc.to_html(classes='table', columns =
+            ol_desc.columns.values[-8:]).replace('border="1"','border="0"')|safe}}
+            <br>
+        </div>
+    </div>
+
+    <div class="panel panel-info">
+        <div class="panel-heading">Heatmap for mean values per acid by areas</div>
+        <div class="panel-body">
+            {{means|safe}}
+            <br>
         </div>
     </div>
 

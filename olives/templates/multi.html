@@ -1,16 +1,21 @@
-
-
 <!-- extend base layout -->
 {% extends "base.html" %}
 
 {% block content %}
 
 
-<h2>Multi-feature comparison (prepared in Seaborn)</h2>
-<br>
+<div class="panel panel-info">
+    <div class="panel-heading">Cross-feature overview</div>
+    <div class="panel-body">This page presents the cross-feature overview for each pair of acids.
+        Samples are categorized by regions (Green - North Italy, Orange - South Italy, Blue - Sardinia)
+        <p/>
+        Plot prepared dynamically using Seaborn PairPlot.
+    </div>
+</div>
+
 <div class="col-sm-12">
 
-<img src="multi.png">
+    <img src="multi.png">
 
 </div>
 

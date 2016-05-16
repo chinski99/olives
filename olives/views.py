@@ -1,58 +1,38 @@
-from olives import app, db
-from flask import render_template, flash, redirect, session, url_for, request, g, make_response
+from olives import app, db, models, forms
+from flask import render_template, make_response, request
 import pandas as pd
-
-from bokeh.plotting import figure
 from bokeh.embed import components
-import seaborn as sns
-from bokeh import mpl
-from olives import models
-
-
-@app.route('/bokeh')
-def bokeh():
-    plot = figure()
-    plot.circle([1, 2], [3, 4])
-    script, div = components(plot)
-    return render_template("bokeh.html", bsc=script, bdiv=div)
 
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
-    ol = pd.read_sql_table('olives', db.session.connection())
-    desc = ol.describe()
-    return render_template("index.html", ol_desc=desc)
+    desc = models.get_description()
+    means = models.get_means()
+    return render_template("index.html", ol_desc=desc, means=means)
 
 
-@app.route('/violin')
-def violin():
-    tips = sns.load_dataset("tips")
-    sns.set_style("whitegrid")
-    ax = sns.violinplot(x="day", y="total_bill", hue="sex",
-                        data=tips, palette="Set2", split=True,
-                        scale="count", inner="stick")
-    bh = mpl.to_bokeh(ax.figure)
+@app.route('/violin/<acid>')
+def violin(acid):
+    bh = models.acid_violin(acid)
     script, div = components(bh)
     return render_template("bokeh.html", bsc=script, bdiv=div)
 
 
-# @app.route('/scatter/<int:acid1>/<int:acid2>')
-# def scatter(acid1, acid2):
-#     if acid2 is None or acid1 == acid2:  # histogram
-#         tips = sns.load_dataset("tips")
-#         sns.set_style("whitegrid")
-#         ax = sns.violinplot(x="day", y="total_bill", hue="sex",
-#                             data=tips, palette="Set2", split=True,
-#                             scale="count", inner="stick")
-#         bh = mpl.to_bokeh()
-#         script, div = components(bh)
-#         return render_template("bokeh.html", bsc=script, bdiv=div)
-#     else:  # scatter
-#         scatter = bk.Scatter(tips, x='palmitic', y='linolenic',
-#                              color='region', marker='area_main',
-#                              title='Iris Dataset Color and Marker by Species',
-#                              legend=True)
+@app.route('/scatter', methods=['post', 'get'])
+def scatter():
+    form = forms.AcidSelForm()
+    if request.method == 'POST':
+        acid1 = form.acid1.data
+        acid2 = form.acid2.data
+        if acid1 == acid2:
+            bh = models.acid_histogram(acid1)
+        else:
+            bh = models.acid_scatter(acid1, acid2)
+        script, div = components(bh)
+        return render_template("cross.html", form=form, bsc=script, bdiv=div)
+    return render_template('cross.html', form=form)
+
 
 @app.route('/multi.png')
 def multiplot():
@@ -61,6 +41,18 @@ def multiplot():
     response.mimetype = 'image/png'
     return response
 
+
 @app.route('/multi')
 def multi():
     return render_template("multi.html")
+
+
+@app.route('/tree')
+def tree():
+    models.prepare_tree_visualization()
+    return render_template("tree.html")
+
+
+@app.context_processor
+def acid_list():
+    return dict(acids=models.get_acids())

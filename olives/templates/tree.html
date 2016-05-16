@@ -1,28 +1,20 @@
-
-
 <!-- extend base layout -->
 {% extends "base.html" %}
 
 {% block content %}
-{{bsc|safe}}
 
 
 <div class="panel panel-info">
-    <div class="panel-heading">Acid distribution across areas</div>
+    <div class="panel-heading">Decision tree to find out the origin of olive</div>
     <div class="panel-body">Page presents distribution of each acid across areas in the dataset.
         <p/>
-        Plots created using Seaborn library and then converted to Bokeh. Plot type is Violinplot.
+        Plot created using the GraphViz tool.
 
     </div>
 </div>
-
-
 <div class="col-sm-12">
 
-    {{bdiv|safe}}
-            <br>
-
-
+    <img src={{url_for('static', filename='images/dt.png' )}} width="1500">
 
 </div>
 

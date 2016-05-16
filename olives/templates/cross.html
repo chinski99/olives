@@ -1,0 +1,61 @@
+
+
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+{{bsc|safe}}
+
+<div class="panel panel-info">
+    <div class="panel-heading">Cross-feature comparison</div>
+    <div class="panel-body">This page presents the cross-feature comparison for pairs of acids.
+        When the same acid is picked a histogram is presented instead.
+        Each diagram displays samples divided across areas.
+        <p/>
+        Plots prepared using Bokeh library: Scatter and Histogram.
+    </div>
+</div>
+
+<div class="col-sm-12">
+
+    <div class="panel panel-info">
+
+        <div class="panel-body">
+
+
+            <form action="" method="post" name="form" role="form" class="form-inline">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    <label for="acid1">Acid 1:</label>
+                    {{ form.acid1(class_="form-control input-sm") }}
+                    {% for error in form.acid1.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}<br>
+                </div>
+                <div class="form-group">
+                    <label for="acid2">Acid 2:</label>
+                    {{ form.acid2(class_="form-control input-sm") }}
+                    {% for error in form.acid2.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}<br>
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+
+
+        </div>
+    </div>
+
+    <div class="panel panel-info">
+
+        <div class="panel-body">
+            {{bdiv|safe}}
+            <br>
+
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
