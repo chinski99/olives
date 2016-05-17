@@ -90,7 +90,7 @@ def train_decision_tree(dataset, features, explained):
     return dt
 
 
-def visualize_tree(tree, acids, regions):
+def visualize_tree(tree, acids, regions):  # this is a hack at this point
     my_dir = os.path.dirname(__file__)
     dot_file_path = os.path.join(my_dir, 'static/images/dt.dot')
     png_file_path = os.path.join(my_dir, 'static/images/dt.png')
@@ -107,8 +107,7 @@ def visualize_tree(tree, acids, regions):
     try:
         subprocess.check_call(command, env=my_env)
     except:
-        exit("Could not run dot, ie graphviz, to "
-             "produce visualization")
+        print("Could not run dot, ie graphviz, to produce visualization")
 
 
 def prepare_tree_visualization():
